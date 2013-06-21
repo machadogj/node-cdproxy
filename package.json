@@ -1,0 +1,26 @@
+{
+	"name" : "cdproxy",
+	"description" : "connect and express middleware for proxying cross domain requests.",
+	"main" : "index.js",
+	"version" : "0.0.1",
+	"dependencies" : {
+		"http-proxy" : "*"
+	},
+	"devDependencies": {
+		"mocha" : "*",
+		"connect" : "*"
+	},
+	"scripts": {
+		"test": "mocha"
+	},
+	"tags" : [
+		"connect",
+		"express",
+		"cors",
+		"jsonp",
+		"middleware",
+		"cross domain"
+	],
+	"author" : "Gustavo Machado",
+	"license" : "MIT"
+}
