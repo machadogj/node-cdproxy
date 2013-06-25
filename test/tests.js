@@ -1,8 +1,9 @@
 var assert    = require('assert'),
-    cdroxy = require('../'),
+    cdroxy    = require('../'),
     connect   = require('connect'),
     http      = require('http'),
-    request   = require('request');
+    request   = require('request'),
+    url       = require("url");
 
 
 describe('cdroxy', function () {
@@ -10,7 +11,11 @@ describe('cdroxy', function () {
     before(function () {
         connect()
             .use(function ( req, res ) {
-                res.end("response from remote");
+                var query = url.parse(req.url).query;
+                if (query)
+                    res.end(query);
+                else
+                    res.end("response from remote");
             })
             .listen(9000);
     });
@@ -30,10 +35,21 @@ describe('cdroxy', function () {
 
             request
                 .get('http://localhost:8000/proxy/http://localhost:9000', function ( err, res, body ) {
-
                     assert.ok(!err);
                     assert.equal(res.statusCode, 200);
                     assert.equal(body, "response from remote");
+                    done();
+                });
+        });
+
+        it('should proxy encoded characters', function ( done ) {
+
+            request
+                .get({
+                    uri: 'http://localhost:8000/proxy/http://localhost:9000/',
+                    qs: { q: 'foo bar' }
+                }, function ( err, res, body ) {
+                    assert.equal(body, 'q=foo%20bar');
                     done();
                 });
         });

@@ -32,9 +32,10 @@ module.exports = function ( prefix ) {
         //check if the url is under the prefix
         if(!req.url.match(pattern)) {  return next(); }
 
-        var backendUrl = decodeURIComponent(req.url.substr( ("/" + prefix + "/").length )),
+        var backendUrl = req.url.substr( ("/" + prefix + "/").length ),
             parsedUrl = url.parse(backendUrl);
 
+        console.log('index- backendUrl: ', backendUrl);
 
         //adjust the req object.
         req.url = backendUrl;
@@ -46,6 +47,7 @@ module.exports = function ( prefix ) {
               port: parsedUrl.port || 80
             });
         }else{
+            console.log('sending https request to: ', backendUrl);
             httpsProxy.proxyRequest(req, res, {
               host: parsedUrl.hostname,
               port: parsedUrl.port || 443

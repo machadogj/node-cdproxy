@@ -2,7 +2,7 @@
 	"name" : "cdproxy",
 	"description" : "connect and express middleware for proxying cross domain requests.",
 	"main" : "index.js",
-	"version" : "0.0.1",
+	"version" : "0.0.2",
 	"dependencies" : {
 		"http-proxy" : "*"
 	},
