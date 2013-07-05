@@ -54,6 +54,17 @@ describe('cdroxy', function () {
                 });
         });
 
+        it('should proxy double encoded urls', function ( done ) {
+            var url = encodeURIComponent('http://localhost:9000');
+            request
+                .get({
+                    uri: 'http://localhost:8000/proxy/' + url
+                }, function ( err, res, body ) {
+                    assert.equal(body, "response from remote");
+                    done();
+                });
+        });
+
         it('should ignore urls outside /proxy/', function ( done ) {
 
             request

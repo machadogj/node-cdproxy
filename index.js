@@ -35,7 +35,11 @@ module.exports = function ( prefix ) {
         var backendUrl = req.url.substr( ("/" + prefix + "/").length ),
             parsedUrl = url.parse(backendUrl);
 
-        console.log('index- backendUrl: ', backendUrl);
+        if (!parsedUrl.hostname) {
+            //see if the url was encoded twice.
+            backendUrl = decodeURIComponent(backendUrl);
+            parsedUrl = url.parse(backendUrl);
+        }
 
         //adjust the req object.
         req.url = backendUrl;
